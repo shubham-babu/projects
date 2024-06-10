@@ -1,8 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Parent, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, Resolver, Subscription , ResolveField} from '@nestjs/graphql';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
-
+import { RegisterUserDto } from './dto/user';
 @Resolver((of) => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {
@@ -27,7 +27,7 @@ export class UserResolver {
 
   @Mutation((returns) => User)
   async createUser(
-    @Args('input') createUser: { name: string; email: string },
+    @Args('input') createUser: RegisterUserDto,
   ): Promise<User> {
     const user = await this.userService.createUser(createUser);
     return user;

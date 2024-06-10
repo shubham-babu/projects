@@ -21,11 +21,11 @@ import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-mov
     DatabaseModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: [join(process.cwd(), './src/**/*.graphql')],
-      // definitions: {
-      //   path: join(process.cwd(), './src/user/graphql.schema.ts'),
-      //   //outputAs: 'class'
-      // }
+      typePaths: [join(process.cwd(), './src/*/*.graphql')],
+      definitions: {
+        path: join(process.cwd(), './src/user/graphql.schema.ts'),
+        outputAs: 'class'
+      } 
     }),
     MovieModule,
     UserFavoriteMovieModule,

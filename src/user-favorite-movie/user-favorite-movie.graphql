@@ -1,15 +1,15 @@
 
 type Query {
-    userFavoriteMovie(id: ID!): userFavoriteMovie
-    userFavoriteMovies(userId: ID, movieId: ID): [userFavoriteMovie]
+    userFavoriteMovie(id: ID!): UserFavoriteMovie
+    userFavoriteMovies(userId: ID, movieId: ID): [UserFavoriteMovie]
 }
 
 type Mutation {
-    addUserFavoriteMovie(input: userFavoriteMovieInput!): userFavoriteMovie
-    deleteUserFavoriteMovie(id: ID!): userFavoriteMovie
+    addUserFavoriteMovie(input: UserFavoriteMovieInput!): UserFavoriteMovie
+    deleteUserFavoriteMovie(id: ID!): UserFavoriteMovie
 }
 
-type userFavoriteMovie {
+type UserFavoriteMovie {
     id: ID!
     userId: ID!
     movieId: ID!
@@ -17,7 +17,7 @@ type userFavoriteMovie {
     movie: Movie!
 }
 
-input userFavoriteMovieInput {
+input UserFavoriteMovieInput {
     userId: ID!
     movieId: ID!
 }

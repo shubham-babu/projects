@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Mutation, Parent} from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, Parent, ResolveField} from '@nestjs/graphql';
 import { UserFavoriteMovieService } from './user-favorite-movie.service';
 import { UserFavoriteMovie } from './models/user-favorite-movie.model';
 import { User } from 'src/user/models/user.model';
@@ -8,7 +8,7 @@ export class UserFavoriteMovieResolver {
     constructor(private readonly service: UserFavoriteMovieService){}
 
     @Query((returns) => UserFavoriteMovie)
-    async userFavoriteMovie(@Args("id") id: number){
+    async userFavoriteMovie(@Parent() parent: any, @Args("id") id: number){
         return this.service.getSingleUserFavoriteMovie(id);
     }
 
@@ -17,7 +17,7 @@ export class UserFavoriteMovieResolver {
         const data =  this.service.getAllUserFavoriteMovies(query);
         return data;
     }
-
+ 
     @Mutation((returns) => UserFavoriteMovie)
     async addUserFavoriteMovie(
       @Args('input') payloadData: UserFavoriteMovie,
@@ -25,6 +25,13 @@ export class UserFavoriteMovieResolver {
      const userMovie = await this.service.addUserFavoriteMovie(payloadData);
       return userMovie;
     }
+
+    // @ResolveField()
+    // async movie(@Parent() user: User & {id: number}) {
+    //   const { id } = user;
+    //   console.log(id, "Sdf ")
+    //   return [];
+    // }
 
     @Mutation((returns)=> UserFavoriteMovie)
     deleteUserFavoriteMovie(@Args("id") id: number){

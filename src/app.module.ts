@@ -28,6 +28,6 @@ import { join } from 'path';
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {
     console.log('AppModule configure');
-    //consumer.apply(LoggerMiddleware).forRoutes('*');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

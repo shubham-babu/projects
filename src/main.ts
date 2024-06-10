@@ -6,7 +6,6 @@ import * as cors from 'cors';
 import helmet from 'helmet';
 
 async function bootstrap() {
-  console.log(AppModule)
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // Set the global prefix
   app.setGlobalPrefix('/api');
@@ -23,7 +22,7 @@ async function bootstrap() {
   // Enable CORS. CORS is a security feature that restricts what resources a web page can request from another domain.
   app.use(cors());
   // Enable Helmet. Helmet helps you secure your Express apps by setting various HTTP headers.
-  app.use(helmet());
+ // app.use(helmet());
 
   await app.listen(3000);
 }

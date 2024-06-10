@@ -1,0 +1,23 @@
+
+type Query {
+    userFavoriteMovie(id: ID!): userFavoriteMovie
+    userFavoriteMovies(userId: ID, movieId: ID): [userFavoriteMovie]
+}
+
+type Mutation {
+    addUserFavoriteMovie(input: userFavoriteMovieInput!): userFavoriteMovie
+    deleteUserFavoriteMovie(id: ID!): userFavoriteMovie
+}
+
+type userFavoriteMovie {
+    id: ID!
+    userId: ID!
+    movieId: ID!
+    user: User!
+    movie: Movie!
+}
+
+input userFavoriteMovieInput {
+    userId: ID!
+    movieId: ID!
+}

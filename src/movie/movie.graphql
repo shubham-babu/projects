@@ -1,3 +1,29 @@
 
 
+type Query {
+    movie(id: ID!): Movie
+    movies: [Movie]
+}
+
+type Mutation {
+    createMovie(input: MovieInput!): Movie
+    updateMovie(id: ID!, input: MovieInput!): Movie
+    deleteMovie(id: ID!): Movie
+}
+
+type Movie {
+    id: ID!
+    name: String!
+    description: String!
+    genres: [String!]!
+    imageUrl: String!
+}
+
+input MovieInput {
+    name: String!
+    description: String!
+    genres: [String!]!
+    imageUrl: String!
+}
+
 # Path: /src/movie/movie.resolver.ts

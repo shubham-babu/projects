@@ -13,6 +13,7 @@ import { join } from 'path';
 import { MovieController } from './movie/movie.controller';
 import { MovieService } from './movie/movie.service';
 import { MovieModule } from './movie/movie.module';
+import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-movie.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { MovieModule } from './movie/movie.module';
       // }
     }),
     MovieModule,
+    UserFavoriteMovieModule,
   ],
   controllers: [AppController, UserController, MovieController],
   providers: [AppService, DatabaseService, MovieService],

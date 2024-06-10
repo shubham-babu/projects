@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
 
@@ -10,7 +10,8 @@ export class UserResolver {
   }
 
   @Query((returns) => User)
-  async user(@Args('id') id: number): Promise<User> {
+  async user(@Parent() parent: any, @Args('id') id: number): Promise<User> {
+    console.log(parent,"sdf sdf ")
     const user = await this.userService.getSingleUser(id);
     if (!user) {
       throw new NotFoundException(id);
@@ -19,7 +20,8 @@ export class UserResolver {
   }
 
   @Query((returns) => [User])
-  users(): Promise<User[]> {
+  users(@Parent() parent: User): Promise<User[]> {
+    console.log(parent)
     return this.userService.getAllUsers();
   }
 

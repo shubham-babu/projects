@@ -9,14 +9,10 @@ import {
   Put,
   HttpException,
   HttpStatus,
-  ParseIntPipe
+  ParseIntPipe,
 } from '@nestjs/common';
 
-import {
-    ApiTags,
-    ApiBody,
-    ApiParam
-} from '@nestjs/swagger'
+import { ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 
 import { UserService } from './user.service';
 @ApiTags('Users')
@@ -32,30 +28,44 @@ export class UserController {
 
   // Add a new route that returns a single user
   @Get('/:id')
-  @ApiParam({name: 'id', type: 'number', required: true})
+  @ApiParam({ name: 'id', type: 'number', required: true })
   async getSingleUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.getSingleUser(id);
   }
 
   // Add a new route that creates a user
   @Post()
-  @ApiBody({schema: {type: 'object', properties: {name: {type: 'string'}, email: {type: 'string'}}}})
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { name: { type: 'string' }, email: { type: 'string' } },
+    },
+  })
   async createUser(@Body('name') name: string, @Body('email') email: string) {
     try {
       return this.userService.createUser({ name, email });
     } catch (error) {
-        console.log(error);
-        throw new HttpException({
-            status: HttpStatus.BAD_REQUEST,
-            error: 'Bad Request',
-        }, HttpStatus.BAD_REQUEST, {cause: "User already exists"});
+      console.log(error);
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Bad Request',
+        },
+        HttpStatus.BAD_REQUEST,
+        { cause: 'User already exists' },
+      );
     }
   }
 
   // Add a new route to update a user
   @Put('/:id')
- @ApiParam({name: 'id', type: 'number', required: true})
- @ApiBody({schema: {type: 'object', properties: {name: {type: 'string'}, email: {type: 'string'}}}})
+  @ApiParam({ name: 'id', type: 'number', required: true })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { name: { type: 'string' }, email: { type: 'string' } },
+    },
+  })
   async updateUser(
     @Param('id') id: number,
     @Body('name') name: string,

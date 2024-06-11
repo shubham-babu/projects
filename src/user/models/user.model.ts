@@ -1,10 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Movie } from 'src/movie/models/movie.model';
+import { loggerMiddleware } from '../middlewares/logger.middleware';
+
 @ObjectType({ description: 'user ' })
 export class User {
-  @Field((type) => ID)
+  @Field((type) => ID, { middleware: [loggerMiddleware] })
   name: string;
 
-  @Field((type) => [String])
+  @Field((type) => [String], { middleware: [loggerMiddleware] })
   email: string;
 }

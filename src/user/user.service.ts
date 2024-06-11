@@ -17,7 +17,14 @@ export class UserService {
       name?: string;
     } = {},
   ) {
-    const condition = { where: {} };
+    const condition = {
+      where: {},
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    };
     if (params.email) {
       condition.where['email'] = params.email;
     }

@@ -1,8 +1,17 @@
-import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Parent, Query, Resolver, Subscription , ResolveField} from '@nestjs/graphql';
+import { NotFoundException, SetMetadata, UseGuards } from '@nestjs/common';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  Resolver,
+  Subscription,
+  ResolveField,
+} from '@nestjs/graphql';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/user';
+import { AuthGuard } from 'src/auth/auth.guard';
 @Resolver((of) => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {
@@ -10,8 +19,8 @@ export class UserResolver {
   }
 
   @Query((returns) => User)
+  @UseGuards(AuthGuard)
   async user(@Parent() parent: any, @Args('id') id: number): Promise<User> {
-    console.log(parent,"sdf sdf ")
     const user = await this.userService.getSingleUser(id);
     if (!user) {
       throw new NotFoundException(id);
@@ -20,15 +29,14 @@ export class UserResolver {
   }
 
   @Query((returns) => [User])
+  @SetMetadata('roles', ['Admin'])
+  @UseGuards(AuthGuard)
   users(@Parent() parent: User): Promise<User[]> {
-    console.log(parent)
     return this.userService.getAllUsers();
   }
 
   @Mutation((returns) => User)
-  async createUser(
-    @Args('input') createUser: RegisterUserDto,
-  ): Promise<User> {
+  async createUser(@Args('input') createUser: RegisterUserDto): Promise<User> {
     const user = await this.userService.createUser(createUser);
     return user;
   }

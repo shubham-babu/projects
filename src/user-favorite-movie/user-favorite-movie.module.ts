@@ -6,6 +6,6 @@ import { DatabaseModule } from 'src/database/database.module';
 @Module({
   imports: [DatabaseModule],
   providers: [UserFavoriteMovieService, UserFavoriteMovieResolver],
-  exports: [UserFavoriteMovieService]
+  exports: [UserFavoriteMovieService],
 })
 export class UserFavoriteMovieModule {}

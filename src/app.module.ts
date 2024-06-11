@@ -14,6 +14,8 @@ import { MovieController } from './movie/movie.controller';
 import { MovieService } from './movie/movie.service';
 import { MovieModule } from './movie/movie.module';
 import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-movie.module';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,16 +24,22 @@ import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-mov
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: [join(process.cwd(), './src/*/*.graphql')],
+      context: ({ req, res }) => {
+        console.log(req.headers.authorization);
+        //const user = AuthService.validateToken(req.headers.authorization)
+        return { req, res };
+      },
       definitions: {
         path: join(process.cwd(), './src/user/graphql.schema.ts'),
-        outputAs: 'class'
-      } 
+        outputAs: 'class',
+      },
     }),
     MovieModule,
     UserFavoriteMovieModule,
+    AuthModule,
   ],
   controllers: [AppController, UserController, MovieController],
-  providers: [AppService, DatabaseService, MovieService],
+  providers: [AppService, DatabaseService, MovieService, AuthService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

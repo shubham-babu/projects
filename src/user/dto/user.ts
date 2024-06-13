@@ -2,9 +2,11 @@ import {
   IsEmail,
   IsNotEmpty,
   IsOptional,
+  IsPhoneNumber,
   IsString,
   Length,
   Matches,
+  ValidateIf,
 } from 'class-validator';
 
 export class RegisterUserDto {
@@ -14,5 +16,13 @@ export class RegisterUserDto {
   name: string;
 
   @IsEmail()
+  @ValidateIf((o) => !o.phone)
   email: string;
+
+  @IsPhoneNumber()
+  @ValidateIf((o) => !o.email)
+  phone: string;
+
+  @IsString()
+  password: string;
 }

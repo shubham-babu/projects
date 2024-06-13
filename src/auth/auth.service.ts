@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-
+const jwt = require('jsonwebtoken');
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
   validateToken(token: string) {
-    return this.userService.getAllUsers({
-      email: token,
-    });
+    const decoded = jwt.verify(token, process.env.APP_SECRET);
+    console.log(decoded);
+    return decoded.userId;
   }
 }

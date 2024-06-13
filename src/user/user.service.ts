@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { User } from './models/user.model';
+import { User, UserWithEmail, UserWithPhone } from './models/user.model';
 
 @Injectable()
 export class UserService {
@@ -23,6 +23,7 @@ export class UserService {
         id: true,
         name: true,
         email: true,
+        phone: true,
       },
     };
     if (params.email) {
@@ -39,21 +40,29 @@ export class UserService {
   }
 
   // Add a new method that creates a user
-  async createUser(data: User) {
+  async createUser(data: Omit<UserWithEmail & UserWithPhone, 'id'>) {
     const user = await this.getAllUsers({ email: data.email });
     if (user.length) throw new ConflictException('User is already exist.');
     return this.db.user.create({
       data: {
         name: data.name,
         email: data.email,
+        password: '',
+        phone: '',
       },
     });
   }
 
   // Add a new method to update a user
-  async updateUser(id: number, data: User) {
+  async updateUser(
+    id: number,
+    data: Omit<UserWithEmail & UserWithPhone, 'id'>,
+  ) {
     const user = await this.getAllUsers({ email: data.email });
-    if (user.length && user.find((el: User & { id: number }) => el.id != id))
+    if (
+      user.length &&
+      user.find((el: UserWithEmail & UserWithPhone) => el.id != id)
+    )
       throw new ConflictException('Email is already exist.');
     return this.db.user.update({
       where: { id: Number(id) },

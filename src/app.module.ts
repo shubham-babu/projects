@@ -24,15 +24,17 @@ import { AuthModule } from './auth/auth.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: [join(process.cwd(), './src/*/*.graphql')],
+      // autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      // sortSchema: true,
       context: ({ req, res }) => {
         console.log(req.headers.authorization);
         //const user = AuthService.validateToken(req.headers.authorization)
         return { req, res };
       },
-      definitions: {
-        path: join(process.cwd(), './src/user/graphql.schema.ts'),
-        outputAs: 'class',
-      },
+      // definitions: {
+      //   path: join(process.cwd(), './src/user/graphql.schema.ts'),
+      //   outputAs: 'class',
+      // },
     }),
     MovieModule,
     UserFavoriteMovieModule,

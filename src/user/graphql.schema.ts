@@ -29,6 +29,12 @@ export class UpdateUserInput {
   email?: Nullable<string>;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  password: string;
+}
+
 export abstract class IQuery {
   abstract movie(id: string): Nullable<Movie> | Promise<Nullable<Movie>>;
 
@@ -84,6 +90,11 @@ export abstract class IMutation {
   ): Nullable<User> | Promise<Nullable<User>>;
 
   abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+  abstract login(
+    email: string,
+    password: string,
+  ): Nullable<AuthPayload> | Promise<Nullable<AuthPayload>>;
 }
 
 export class Movie {
@@ -102,10 +113,29 @@ export class UserFavoriteMovie {
   movie: Movie;
 }
 
-export class User {
+export class AuthPayload {
+  token?: Nullable<string>;
+  user?: Nullable<User>;
+}
+
+export class UserWithEmail implements User {
   id: string;
   name: string;
+  password: string;
   email: string;
+}
+
+export class UserWithPhone implements User {
+  id: string;
+  name: string;
+  password: string;
+  phone: string;
+}
+
+export class Pagination {
+  total?: Nullable<number>;
+  scroll_id?: Nullable<number>;
+  _size?: Nullable<number>;
 }
 
 type Nullable<T> = T | null;

@@ -41,9 +41,14 @@ export class UserController {
       properties: { name: { type: 'string' }, email: { type: 'string' } },
     },
   })
-  async createUser(@Body('name') name: string, @Body('email') email: string) {
+  async createUser(
+    @Body('name') name: string,
+    @Body('email') email: string,
+    @Body('phone') phone: string,
+    @Body('password') password: string,
+  ) {
     try {
-      return this.userService.createUser({ name, email });
+      return this.userService.createUser({ name, email, phone, password });
     } catch (error) {
       console.log(error);
       throw new HttpException(
@@ -70,7 +75,9 @@ export class UserController {
     @Param('id') id: number,
     @Body('name') name: string,
     @Body('email') email: string,
+    @Body('phone') phone: string,
+    @Body('phone') password: string,
   ) {
-    return this.userService.updateUser(id, { name, email });
+    return this.userService.updateUser(id, { name, email, phone, password });
   }
 }

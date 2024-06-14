@@ -24,5 +24,6 @@ export class RegisterUserDto {
   phone: string;
 
   @IsString()
+  @IsNotEmpty()
   password: string;
 }

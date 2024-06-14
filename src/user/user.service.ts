@@ -42,6 +42,7 @@ export class UserService {
   // Add a new method that creates a user
   async createUser(data: Omit<UserWithEmail & UserWithPhone, 'id'>) {
     const user = await this.getAllUsers({ email: data.email });
+    console.log(user);
     if (user.length) throw new ConflictException('User is already exist.');
     return this.db.user.create({
       data: {

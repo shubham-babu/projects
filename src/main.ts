@@ -5,12 +5,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cors from 'cors';
 import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
+import GqlExceptionFilter from './common/filters/gql-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // Set the global prefix
   app.setGlobalPrefix('/api');
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new GqlExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('User Service')

@@ -1,11 +1,18 @@
 // src/user/user.entity.ts
-import { ObjectType, Field, ID, InterfaceType } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  ID,
+  InterfaceType,
+  Directive,
+} from '@nestjs/graphql';
 
 @InterfaceType()
 export abstract class User {
   @Field((type) => ID)
   id: number;
 
+  @Directive('@upper')
   @Field()
   name: string;
 

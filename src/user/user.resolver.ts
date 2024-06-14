@@ -2,6 +2,7 @@ import {
   NotFoundException,
   Request,
   SetMetadata,
+  UseFilters,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import {
   Subscription,
   ResolveField,
   Context,
+  Directive,
 } from '@nestjs/graphql';
 // import { User } from './models/user.model';
 import { UserService } from './user.service';
@@ -23,10 +25,12 @@ import { AuthenticationError } from '@nestjs/apollo';
 import { LoggingInterceptor } from './logging.interceptor';
 import { User, UserWithPhone, UserWithEmail } from './models/user.model';
 import { UserAgs } from './decorators/user.decorator';
+import GqlExceptionFilter from '.././common/filters/gql-exception.filter';
 
 const jwt = require('jsonwebtoken');
 @Resolver((of) => User)
 @UseInterceptors(LoggingInterceptor)
+@UseFilters(GqlExceptionFilter)
 export class UserResolver {
   constructor(private readonly userService: UserService) {
     console.log('UserResolver constructor');
@@ -34,6 +38,9 @@ export class UserResolver {
 
   @Query('user')
   @UseGuards(AuthGuard)
+  @Directive(
+    '@deprecated(reason: "This query will be removed in the next version")',
+  )
   async user(@Parent() parent: any, @Args('id') id: number): Promise<User> {
     const user = await this.userService.getSingleUser(id);
     if (!user) {
@@ -52,6 +59,7 @@ export class UserResolver {
   ): Promise<Omit<User, 'password'>[]> {
     this.userService.getAllUsers().then(console.log);
     console.log(ctx.req.user, 'Sdf ', user);
+    throw new NotFoundException('sdf ');
     return this.userService.getAllUsers();
   }
 
@@ -68,6 +76,7 @@ export class UserResolver {
 
   @ResolveField()
   __resolveType(value: User) {
+    console.log('sdf __resolveType');
     if ('email' in value) {
       return 'UserWithEmail';
     }
@@ -79,6 +88,7 @@ export class UserResolver {
 
   @Mutation()
   async createUser(@Args('input') input: RegisterUserDto): Promise<User> {
+    console.log(input, 'sdf ');
     const user = await this.userService.createUser(input);
     return user;
   }

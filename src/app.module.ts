@@ -16,7 +16,9 @@ import { MovieModule } from './movie/movie.module';
 import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-movie.module';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-
+import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
+import GqlExceptionFilter from './common/filters/gql-exception.filter';
+import { APP_FILTER } from '@nestjs/core';
 @Module({
   imports: [
     UserModule,
@@ -24,6 +26,7 @@ import { AuthModule } from './auth/auth.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: [join(process.cwd(), './src/*/*.graphql')],
+      transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
       // autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       // sortSchema: true,
       context: ({ req, res }) => {
@@ -35,13 +38,30 @@ import { AuthModule } from './auth/auth.module';
       //   path: join(process.cwd(), './src/user/graphql.schema.ts'),
       //   outputAs: 'class',
       // },
+      // formatError: (error: any) => {
+      //   console.log(error)
+      //   const graphQLFormattedError = {
+      //     status: error.extensions?.status || 500,
+      //     message: error.message,
+      //   };
+      //   return graphQLFormattedError;
+      // },
     }),
     MovieModule,
     UserFavoriteMovieModule,
     AuthModule,
   ],
   controllers: [AppController, UserController, MovieController],
-  providers: [AppService, DatabaseService, MovieService, AuthService],
+  providers: [
+    AppService,
+    DatabaseService,
+    MovieService,
+    AuthService,
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: GqlExceptionFilter,
+    // }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

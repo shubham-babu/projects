@@ -73,9 +73,9 @@ npm run build
 
 If you encounter any issues during the setup, refer to the following:
 
-Check the console logs for any error messages and follow the suggested fixes.
-Ensure all environment variables are set correctly in the .env file.
-Make sure all dependencies are installed correctly by running npm install again.
+<p>Check the console logs for any error messages and follow the suggested fixes.</p>
+<p>Ensure all environment variables are set correctly in the .env file.</p>
+<p>Make sure all dependencies are installed correctly by running npm install again.</p>
 
 
 

@@ -6,10 +6,9 @@ Welcome to the B2C project! This guide will help you set up the project on your 
 
 Before you begin, ensure you have the following installed on your machine:
 
-- **Node.js** (v14.x or higher)
-- **npm** (v6.x or higher) or **yarn** (v1.x or higher)
+- **Node.js** (v20.x or higher)
+- **npm** (v9.x or higher)
 - **Git**
-- **Docker** (optional, for running the database locally)
 
 ## Getting Started
 

@@ -1,6 +1,23 @@
-# B2C Project
+# B2C Monorepo
 
-Welcome to the B2C project! This guide will help you set up the project on your local machine so you can start contributing quickly.
+## Overview
+
+This monorepo project is designed to provide a base template for developing both backend and frontend applications using TurboRepo. The backend is built with NestJS, the frontend with NextJS, and a shared common library is used across both applications.
+
+## Directory Structure
+
+```
+b2c/
+├── apps/
+│ ├── backend/ # NestJS application
+│ └── frontend/ # NextJS application
+├── packages/
+│ └── common/ # Shared common library
+├── node_modules/
+├── package.json
+├── turbo.json
+└── ...
+```
 
 ## Prerequisites
 

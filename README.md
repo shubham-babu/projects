@@ -34,7 +34,7 @@ Before you begin, ensure you have the following installed on your machine:
 First, clone the repository to your local machine using Git:
 
 ```bash
-git clone https://github.com/your-org/b2c.git
+git clone [https://github.com/your-org/b2c.git](https://github.com/Revivme/B2C.git)
 cd b2c
 ```
 ### Step 2: Install Dependencies

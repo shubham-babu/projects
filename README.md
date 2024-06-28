@@ -25,7 +25,7 @@ Before you begin, ensure you have the following installed on your machine:
 
 - [Node.js](https://nodejs.org/) (version 20.x or later)
 - [npm](https://www.npmjs.com/) (version 9.x or later)
-- [Git]([https://git-scm.com/)
+- [Git](https://git-scm.com/)
 
 ## Getting Started
 

@@ -23,9 +23,9 @@ b2c/
 
 Before you begin, ensure you have the following installed on your machine:
 
-- **Node.js** (v20.x or higher)
-- **npm** (v9.x or higher)
-- **Git**
+- [Node.js](https://nodejs.org/) (version 20.x or later)
+- [npm](https://www.npmjs.com/) (version 9.x or later)
+- [Git](https://www.npmjs.com/)
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ Before you begin, ensure you have the following installed on your machine:
 First, clone the repository to your local machine using Git:
 
 ```bash
-git clone [https://github.com/your-org/b2c.git](https://github.com/Revivme/B2C.git)
+git clone https://github.com/Revivme/B2C.git
 cd b2c
 ```
 ### Step 2: Install Dependencies

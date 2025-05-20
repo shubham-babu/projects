@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 @Injectable()
 export class AuthService {
   validateToken(token: string) {

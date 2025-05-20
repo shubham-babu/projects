@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { User, UserWithEmail, UserWithPhone } from './models/user.model';
+import { UserWithEmail, UserWithPhone } from './models/user.model';
 
 @Injectable()
 export class UserService {

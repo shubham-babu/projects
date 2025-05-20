@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  Catch,
-  ExceptionFilter,
-  ArgumentsHost,
-} from '@nestjs/common';
+import { Injectable, Catch, ArgumentsHost } from '@nestjs/common';
 import {
   GqlArgumentsHost,
   GqlExceptionFilter as NestGqlExceptionFilter,
@@ -17,7 +12,10 @@ export default class GqlExceptionFilter implements NestGqlExceptionFilter {
     const gqlHost = GqlArgumentsHost.create(host);
     const context = gqlHost.getContext();
     const response = context.res;
-
+    if (!response) {
+      console.log('No response object found');
+      return;
+    }
     response.json({
       statusCode: exception.getStatus(),
       message: exception.message,

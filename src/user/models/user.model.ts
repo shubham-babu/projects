@@ -9,7 +9,7 @@ import {
 
 @InterfaceType()
 export abstract class User {
-  @Field((type) => ID)
+  @Field(() => ID)
   id: number;
 
   @Directive('@upper')

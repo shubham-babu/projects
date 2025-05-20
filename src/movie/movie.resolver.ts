@@ -3,11 +3,11 @@ import { Movie } from './models/movie.model';
 import { MovieService } from './movie.service';
 import { NotFoundException } from '@nestjs/common';
 
-@Resolver((of) => Movie)
+@Resolver(() => Movie)
 export class MovieResolver {
   constructor(private readonly movieService: MovieService) {}
   // query movie resolver
-  @Query((returns) => Movie)
+  @Query(() => Movie)
   async movie(@Args('id') id: number): Promise<Movie> {
     const movie = await this.movieService.getSingleMovie(id);
     if (!movie) {
@@ -17,12 +17,12 @@ export class MovieResolver {
   }
 
   // query movies resolver
-  @Query((returns) => [Movie])
+  @Query(() => [Movie])
   movies(): Promise<Movie[]> {
     return this.movieService.getAllMovies();
   }
 
-  @Mutation((returns) => Movie)
+  @Mutation(() => Movie)
   async createMovie(
     @Args('input')
     createMovie: {
@@ -35,7 +35,7 @@ export class MovieResolver {
     const user = await this.movieService.createMovie(createMovie);
     return user;
   }
-  @Mutation((returns) => Movie)
+  @Mutation(() => Movie)
   async updateMovie(
     @Args('id') id: number,
     @Args('input')
@@ -49,7 +49,7 @@ export class MovieResolver {
     return await this.movieService.updateMovie(id, payloadData);
   }
 
-  @Mutation((returns) => Boolean)
+  @Mutation(() => Boolean)
   async deleteMovie(@Args('id') id: number) {
     return this.movieService.remove(id);
   }

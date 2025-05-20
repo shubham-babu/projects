@@ -2,15 +2,15 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType({ description: 'movie ' })
 export class Movie {
-  @Field((type) => ID)
+  @Field(() => ID)
   name: string;
 
-  @Field((type) => [String])
+  @Field(() => [String])
   description: string;
 
-  @Field((type) => [String!]!)
-  genres: String[];
+  @Field(() => [String!]!)
+  genres: string[];
 
-  @Field((type) => [String])
+  @Field(() => [String])
   imageUrl: string;
 }

@@ -14,6 +14,7 @@ export class MovieService {
       imageUrl?: string;
     } = {},
   ) {
+    console.log('params', params);
     return this.db.movie.findMany();
   }
 

@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cors from 'cors';
-import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
 import GqlExceptionFilter from './common/filters/gql-exception.filter';
 

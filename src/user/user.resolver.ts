@@ -1,6 +1,5 @@
 import {
   NotFoundException,
-  Request,
   SetMetadata,
   UseFilters,
   UseGuards,
@@ -9,12 +8,9 @@ import {
 import {
   Args,
   Mutation,
-  Parent,
   Query,
   Resolver,
-  Subscription,
   ResolveField,
-  Context,
   Directive,
 } from '@nestjs/graphql';
 // import { User } from './models/user.model';
@@ -23,12 +19,11 @@ import { RegisterUserDto } from './dto/user';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { AuthenticationError } from '@nestjs/apollo';
 import { LoggingInterceptor } from './logging.interceptor';
-import { User, UserWithPhone, UserWithEmail } from './models/user.model';
-import { UserAgs } from './decorators/user.decorator';
+import { User } from './models/user.model';
 import GqlExceptionFilter from '.././common/filters/gql-exception.filter';
 
-const jwt = require('jsonwebtoken');
-@Resolver((of) => User)
+import jwt from 'jsonwebtoken';
+@Resolver(() => User)
 @UseInterceptors(LoggingInterceptor)
 @UseFilters(GqlExceptionFilter)
 export class UserResolver {
@@ -41,7 +36,7 @@ export class UserResolver {
   @Directive(
     '@deprecated(reason: "This query will be removed in the next version")',
   )
-  async user(@Parent() parent: any, @Args('id') id: number): Promise<User> {
+  async user(@Args('id') id: number): Promise<User> {
     const user = await this.userService.getSingleUser(id);
     if (!user) {
       throw new NotFoundException(id);
@@ -49,17 +44,11 @@ export class UserResolver {
     return user;
   }
 
-  @Query((returns) => [User])
+  @Query(() => [User])
   @SetMetadata('roles', ['Admin'])
   @UseGuards(AuthGuard)
-  users(
-    @Parent() parent: User,
-    @Context() ctx: any,
-    @UserAgs() user: any,
-  ): Promise<Omit<User, 'password'>[]> {
+  users(): Promise<Omit<User, 'password'>[]> {
     this.userService.getAllUsers().then(console.log);
-    console.log(ctx.req.user, 'Sdf ', user);
-    throw new NotFoundException('sdf ');
     return this.userService.getAllUsers();
   }
 
@@ -94,10 +83,7 @@ export class UserResolver {
   }
 
   @Mutation()
-  async login(
-    @Args('email') email: string,
-    @Args('password') password: string,
-  ) {
+  async login(@Args('email') email: string) {
     const user = await this.userService.getAllUsers({ email });
     if (!user?.length) throw new AuthenticationError('Invalid credentials');
 
@@ -118,7 +104,7 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation((returns) => Boolean)
+  @Mutation(() => Boolean)
   async deleteUser(@Args('id') id: number) {
     return this.userService.remove(id);
   }

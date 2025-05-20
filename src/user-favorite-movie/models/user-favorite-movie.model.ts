@@ -1,12 +1,11 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Movie } from 'src/movie/models/movie.model';
 
 @ObjectType({ description: 'UserFavoriteMovie' })
 export class UserFavoriteMovie {
-  @Field((type) => ID)
+  @Field(() => ID)
   userId: number;
 
-  @Field((type) => ID)
+  @Field(() => ID)
   movieId: number;
 
   // @Field(type => Movie)

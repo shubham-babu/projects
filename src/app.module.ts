@@ -17,10 +17,14 @@ import { UserFavoriteMovieModule } from './user-favorite-movie/user-favorite-mov
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
+import { ConfigModule } from '@nestjs/config';
 import GqlExceptionFilter from './common/filters/gql-exception.filter';
 import { APP_FILTER } from '@nestjs/core';
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // makes env vars available app-wide
+    }),
     UserModule,
     DatabaseModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -57,10 +61,10 @@ import { APP_FILTER } from '@nestjs/core';
     DatabaseService,
     MovieService,
     AuthService,
-    // {
-    //   provide: APP_FILTER,
-    //   useClass: GqlExceptionFilter,
-    // }
+    {
+      provide: APP_FILTER,
+      useClass: GqlExceptionFilter,
+    },
   ],
 })
 export class AppModule implements NestModule {

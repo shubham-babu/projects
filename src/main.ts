@@ -8,7 +8,7 @@ import GqlExceptionFilter from './common/filters/gql-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  // Set the global prefix sdf
+  // Set the global prefix sdf   updated
   app.setGlobalPrefix('/api');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GqlExceptionFilter());

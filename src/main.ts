@@ -25,7 +25,7 @@ async function bootstrap() {
   // Enable CORS. CORS is a security feature that restricts what resources a web page can request from another domain.
   app.use(cors());
   // Enable Helmet. Helmet helps you secure your Express apps by setting various HTTP headers.
-  // app.use(helmet());
+  // app.use(helmet()); updated main branch
 
   await app.listen(3000);
 }

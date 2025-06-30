@@ -5,13 +5,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cors from 'cors';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   // Set the global prefix updated test2
   app.setGlobalPrefix('/api');
   app.useGlobalPipes(new ValidationPipe());
-
+  app.useGlobalInterceptors(new LoggingInterceptor());
   const config = new DocumentBuilder()
     .setTitle('User Service')
     .setDescription('The users API description')

@@ -1,11 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { DatabaseService } from './database/database.service';
 import { DatabaseModule } from './database/database.module';
-import { NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -18,8 +17,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { ConfigModule } from '@nestjs/config';
-import GqlExceptionFilter from './common/filters/gql-exception.filter';
-import { APP_FILTER } from '@nestjs/core';
+
 @Module({
   imports: [
     ConfigModule.forRoot({

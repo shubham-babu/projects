@@ -8,7 +8,7 @@ import { UserWithEmail, UserWithPhone } from './models/user.model';
 
 @Injectable()
 export class UserService {
-  constructor(private db: DatabaseService) {}
+  constructor(private readonly db: DatabaseService) {}
 
   // Add a new method that returns all users
   async getAllUsers(

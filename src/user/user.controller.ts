@@ -8,15 +8,24 @@ import {
   HttpException,
   HttpStatus,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 
 import { ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
-
+import { RolesGuard } from './../common/guards/roles.guard';
 import { UserService } from './user.service';
+import { Roles } from './../common/decorators/roles.decorator';
 @ApiTags('Users')
 @Controller('/user')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('/test')
+  @Roles('admin')
+  async test() {
+    return 'test';
+  }
 
   // Add a new route that returns all users
   @Get()

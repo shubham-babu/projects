@@ -34,7 +34,6 @@ import { APP_FILTER } from '@nestjs/core';
       // autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       // sortSchema: true,
       context: ({ req, res }) => {
-        console.log(req.headers.authorization);
         //const user = AuthService.validateToken(req.headers.authorization)
         return { req, res };
       },
@@ -56,16 +55,7 @@ import { APP_FILTER } from '@nestjs/core';
     AuthModule,
   ],
   controllers: [AppController, UserController, MovieController],
-  providers: [
-    AppService,
-    DatabaseService,
-    MovieService,
-    AuthService,
-    {
-      provide: APP_FILTER,
-      useClass: GqlExceptionFilter,
-    },
-  ],
+  providers: [AppService, DatabaseService, MovieService, AuthService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
